@@ -3,16 +3,29 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Order Processing Service</title>
+        <title>SuperOrder Service | v2.0</title>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
         <style>
+            :root {
+                --primary: #6a0dad;
+                --primary-dark: #4b0082;
+                --secondary: #ff8c00;
+                --light: #f5f5ff;
+                --dark: #1a1a2e;
+                --success: #28a745;
+                --info: #17a2b8;
+                --warning: #ffc107;
+                --shadow: 0 4px 12px rgba(0,0,0,0.15);
+                --gradient: linear-gradient(135deg, #6a0dad, #9932cc);
+            }
+            
             body {
-                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
                 line-height: 1.6;
                 margin: 0;
                 padding: 0;
                 color: #333;
-                background-color: #f8f9fa;
+                background-color: var(--light);
                 display: flex;
                 flex-direction: column;
                 min-height: 100vh;
@@ -26,10 +39,10 @@
             }
             
             header {
-                background-color: #4a6fa5;
+                background: var(--gradient);
                 color: white;
-                padding: 1rem 0;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                padding: 1.25rem 0;
+                box-shadow: var(--shadow);
             }
             
             .header-content {
@@ -42,33 +55,82 @@
             }
             
             .logo {
-                font-size: 1.8rem;
+                font-size: 2rem;
                 font-weight: bold;
                 display: flex;
                 align-items: center;
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
             }
             
             .logo i {
-                margin-right: 0.5rem;
+                margin-right: 0.8rem;
+                color: var(--secondary);
+            }
+            
+            .version-badge {
+                background-color: var(--secondary);
+                color: white;
+                padding: 0.3rem 0.6rem;
+                border-radius: 20px;
+                font-size: 0.8rem;
+                font-weight: bold;
+                margin-left: 1rem;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            }
+            
+            .build-info {
+                background-color: rgba(255,255,255,0.1);
+                padding: 0.4rem 0.8rem;
+                border-radius: 4px;
+                font-size: 0.8rem;
+                transition: all 0.3s ease;
+                cursor: pointer;
+            }
+            
+            .build-info:hover {
+                background-color: var(--secondary);
+                color: white;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.2);
             }
             
             .card {
                 background-color: white;
-                border-radius: 8px;
-                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-                padding: 2rem;
-                margin-top: 2rem;
+                border-radius: 12px;
+                box-shadow: var(--shadow);
+                padding: 2.5rem;
+                margin-top: 2.5rem;
                 text-align: center;
-                transition: transform 0.3s ease;
+                transition: all 0.3s ease;
+                border-top: 5px solid var(--primary);
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .card::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(135deg, rgba(106, 13, 173, 0.05) 0%, rgba(255, 140, 0, 0.05) 100%);
+                opacity: 0;
+                transition: opacity 0.3s ease;
             }
             
             .card:hover {
-                transform: translateY(-5px);
+                transform: translateY(-7px);
+                box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            }
+            
+            .card:hover::before {
+                opacity: 1;
             }
             
             h1 {
-                color: #2c3e50;
+                color: var(--dark);
                 margin-bottom: 1.5rem;
+                font-size: 2.2rem;
             }
             
             p {
@@ -79,62 +141,193 @@
             
             .btn {
                 display: inline-block;
-                background-color: #4a6fa5;
+                background: var(--gradient);
                 color: white;
-                padding: 0.8rem 1.5rem;
-                border-radius: 4px;
+                padding: 0.9rem 1.8rem;
+                border-radius: 30px;
                 text-decoration: none;
                 font-weight: bold;
-                transition: background-color 0.3s ease;
+                transition: all 0.3s ease;
+                box-shadow: 0 4px 8px rgba(106, 13, 173, 0.3);
+                border: none;
+                cursor: pointer;
+                position: relative;
+                overflow: hidden;
+                z-index: 1;
+            }
+            
+            .btn::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 0%;
+                height: 100%;
+                background: linear-gradient(135deg, var(--secondary), darkorange);
+                transition: width 0.3s ease;
+                z-index: -1;
             }
             
             .btn:hover {
-                background-color: #355685;
+                box-shadow: 0 6px 12px rgba(106, 13, 173, 0.4);
+            }
+            
+            .btn:hover::before {
+                width: 100%;
             }
             
             .btn i {
-                margin-right: 0.5rem;
+                margin-right: 0.7rem;
             }
             
             .features {
                 display: flex;
                 flex-wrap: wrap;
                 justify-content: space-between;
-                margin-top: 3rem;
+                margin-top: 3.5rem;
+                gap: 1.5rem;
             }
             
             .feature {
                 flex: 0 0 30%;
                 text-align: center;
-                padding: 1.5rem;
+                padding: 2rem;
                 background-color: white;
-                border-radius: 8px;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+                border-radius: 12px;
+                box-shadow: var(--shadow);
                 margin-bottom: 2rem;
+                transition: all 0.3s ease;
+                border-bottom: 3px solid transparent;
+            }
+            
+            .feature:nth-child(1) {
+                border-bottom-color: var(--success);
+            }
+            
+            .feature:nth-child(2) {
+                border-bottom-color: var(--primary);
+            }
+            
+            .feature:nth-child(3) {
+                border-bottom-color: var(--warning);
+            }
+            
+            .feature:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 16px rgba(0,0,0,0.15);
             }
             
             .feature i {
-                font-size: 2.5rem;
-                color: #4a6fa5;
-                margin-bottom: 1rem;
+                font-size: 3rem;
+                margin-bottom: 1.2rem;
+                display: inline-block;
+                padding: 1.3rem;
+                border-radius: 50%;
+                background-color: #f8f9fa;
+                color: var(--primary);
+                transition: all 0.3s ease;
+            }
+            
+            .feature:nth-child(1) i {
+                color: var(--success);
+            }
+            
+            .feature:nth-child(2) i {
+                color: var(--primary);
+            }
+            
+            .feature:nth-child(3) i {
+                color: var(--warning);
+            }
+            
+            .feature:hover i {
+                background-color: var(--primary);
+                color: white;
+                transform: rotateY(180deg);
+            }
+            
+            .feature:nth-child(1):hover i {
+                background-color: var(--success);
+            }
+            
+            .feature:nth-child(2):hover i {
+                background-color: var(--primary);
+            }
+            
+            .feature:nth-child(3):hover i {
+                background-color: var(--warning);
             }
             
             .feature h3 {
-                color: #2c3e50;
-                margin-bottom: 0.5rem;
+                color: var(--dark);
+                margin-bottom: 0.8rem;
+                font-size: 1.4rem;
             }
             
             footer {
-                background-color: #2c3e50;
+                background-color: var(--dark);
                 color: white;
                 text-align: center;
-                padding: 1.5rem 0;
+                padding: 1.8rem 0;
                 margin-top: 3rem;
+            }
+            
+            .deployment-info {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 0.5rem;
+                background-color: rgba(0,0,0,0.1);
+                border-radius: 4px;
+                margin-top: 0.5rem;
+                font-size: 0.85rem;
+            }
+            
+            .deployment-info i {
+                margin-right: 0.5rem;
+                color: var(--secondary);
+            }
+            
+            .pulse {
+                animation: pulse 2s infinite;
+                display: inline-block;
+                height: 10px;
+                width: 10px;
+                border-radius: 50%;
+                background-color: #28a745;
+                margin-right: 0.5rem;
+            }
+            
+            @keyframes pulse {
+                0% {
+                    transform: scale(0.95);
+                    box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7);
+                }
+                
+                70% {
+                    transform: scale(1);
+                    box-shadow: 0 0 0 6px rgba(40, 167, 69, 0);
+                }
+                
+                100% {
+                    transform: scale(0.95);
+                    box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
+                }
             }
             
             @media (max-width: 768px) {
                 .feature {
                     flex: 0 0 100%;
+                }
+                
+                .header-content {
+                    flex-direction: column;
+                    text-align: center;
+                    gap: 1rem;
+                }
+                
+                .build-info {
+                    margin-top: 0.5rem;
                 }
             }
         </style>
@@ -143,41 +336,78 @@
         <header>
             <div class="header-content">
                 <div class="logo">
-                    <i class="fas fa-shopping-cart"></i> Order Service
+                    <i class="fas fa-rocket"></i> SuperOrder
+                    <span class="version-badge">v2.0</span>
+                </div>
+                <div class="build-info">
+                    <i class="fas fa-code-branch"></i> Build: v2.0.<span id="build-number">0</span> (<span id="build-timestamp">Loading...</span>)
                 </div>
             </div>
         </header>
         
         <div class="container">
             <div class="card">
-                <h1>Welcome to the Order Processing Service</h1>
-                <p>Our high-performance system is ready to process your orders quickly and efficiently.</p>
-                <a href="/order" class="btn"><i class="fas fa-paper-plane"></i> Place an Order</a>
+                <h1>Next-Gen Order Processing Platform</h1>
+                <p>Experience lightning-fast order processing with our state-of-the-art system designed for maximum efficiency and reliability.</p>
+                <a href="/order" class="btn"><i class="fas fa-paper-plane"></i> Process New Order</a>
             </div>
             
             <div class="features">
                 <div class="feature">
                     <i class="fas fa-bolt"></i>
-                    <h3>Fast Processing</h3>
-                    <p>Orders are processed with our optimized system for quick delivery.</p>
+                    <h3>Turbo Processing</h3>
+                    <p>Our optimized algorithms handle your orders at record speeds, ensuring minimal wait times.</p>
                 </div>
                 <div class="feature">
                     <i class="fas fa-shield-alt"></i>
-                    <h3>Secure Transactions</h3>
-                    <p>Your payment information is always protected with our secure system.</p>
+                    <h3>Enhanced Security</h3>
+                    <p>Advanced encryption and security protocols keep your transaction data protected at all times.</p>
                 </div>
                 <div class="feature">
-                    <i class="fas fa-truck"></i>
-                    <h3>Reliable Shipping</h3>
-                    <p>Multiple shipping options to meet your delivery timeline needs.</p>
+                    <i class="fas fa-truck-fast"></i>
+                    <h3>Premium Logistics</h3>
+                    <p>Multiple delivery options with real-time tracking to meet your specific timeline requirements.</p>
                 </div>
             </div>
         </div>
         
         <footer>
-            &copy; 2025 Order Processing Service. All rights reserved.
+            <div>&copy; 2025 SuperOrder Processing Platform. All rights reserved.</div>
+            <div class="deployment-info">
+                <div class="pulse"></div>
+                <span>Deployment Status: Active</span> | 
+                <i class="fas fa-clock"></i> <span id="deployment-time">Loading...</span>
+            </div>
         </footer>
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+        <script>
+            // Set build timestamp to current time
+            const currentDate = new Date();
+            const formattedDate = currentDate.toLocaleDateString();
+            const formattedTime = currentDate.toLocaleTimeString();
+            
+            // Generate a random build number
+            const buildNumber = Math.floor(Math.random() * 1000);
+            document.getElementById('build-number').textContent = buildNumber;
+            
+            document.getElementById('build-timestamp').textContent = `${formattedDate} ${formattedTime}`;
+            document.getElementById('deployment-time').textContent = `${formattedDate} ${formattedTime}`;
+            
+            // Update the deployment time every minute to show elapsed time
+            setInterval(() => {
+                const now = new Date();
+                const elapsed = Math.floor((now - currentDate) / 60000);
+                if (elapsed < 60) {
+                    document.getElementById('deployment-time').textContent = 
+                        `${formattedDate} ${formattedTime} (${elapsed} min ago)`;
+                } else {
+                    const hours = Math.floor(elapsed / 60);
+                    const minutes = elapsed % 60;
+                    document.getElementById('deployment-time').textContent = 
+                        `${formattedDate} ${formattedTime} (${hours}h ${minutes}m ago)`;
+                }
+            }, 60000);
+        </script>
     </body>
 </html>
