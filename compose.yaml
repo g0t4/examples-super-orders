@@ -1,6 +1,6 @@
 services:
   orders:
-    image: weshigbee/ex-orders-service:2.1
+    image: weshigbee/ex-orders-service:2.2
     ports:
       - "3000:3000"
     build:
@@ -20,6 +20,6 @@ services:
             - "uv.lock"
             - "*.sh"
     labels:
-      - "app.version=2.1"
+      - "app.version=2.2"
       - "app.description=SuperOrder Processing Platform"
       - "app.maintainer=wesdemos"

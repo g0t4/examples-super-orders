@@ -9,7 +9,7 @@ import os
 import time
 
 # Version information
-VERSION = "2.1"
+VERSION = "2.2"
 
 app = Flask(__name__)
 
