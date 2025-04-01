@@ -1,0 +1,21 @@
+services:
+  orders:
+    image: weshigbee/ex-orders-service:1.0
+    ports:
+      - "3000:3000"
+    build:
+      context: .
+      dockerfile: Dockerfile
+      platforms:
+        - "linux/arm64"
+        - "linux/amd64"
+    develop:
+      watch:
+        - action: rebuild
+          path: .
+          ignore:
+            - "*.pyc"
+            - "__pycache__/"
+            - ".git/"
+            - "uv.lock"
+            - "*.sh"
