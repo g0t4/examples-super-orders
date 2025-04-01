@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>SuperOrder Service | v2.0</title>
+        <title>SuperOrder Service</title>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
         <style>
             :root {
@@ -340,7 +340,7 @@
                     <span class="version-badge">v2.1</span>
                 </div>
                 <div class="build-info">
-                    <i class="fas fa-code-branch"></i> Build: v2.1.<span id="build-number">0</span> (<span id="build-timestamp">Loading...</span>)
+                    <i class="fas fa-code-branch"></i> Build: v2.1
                 </div>
             </div>
         </header>
@@ -373,41 +373,8 @@
         
         <footer>
             <div>&copy; 2025 SuperOrder Processing Platform. All rights reserved.</div>
-            <div class="deployment-info">
-                <div class="pulse"></div>
-                <span>Deployment Status: Active</span> | 
-                <i class="fas fa-clock"></i> <span id="deployment-time">Loading...</span>
-            </div>
         </footer>
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
-        <script>
-            // Set build timestamp to current time
-            const currentDate = new Date();
-            const formattedDate = currentDate.toLocaleDateString();
-            const formattedTime = currentDate.toLocaleTimeString();
-            
-            // Generate a random build number
-            const buildNumber = Math.floor(Math.random() * 1000);
-            document.getElementById('build-number').textContent = buildNumber;
-            
-            document.getElementById('build-timestamp').textContent = `${formattedDate} ${formattedTime}`;
-            document.getElementById('deployment-time').textContent = `${formattedDate} ${formattedTime}`;
-            
-            // Update the deployment time every minute to show elapsed time
-            setInterval(() => {
-                const now = new Date();
-                const elapsed = Math.floor((now - currentDate) / 60000);
-                if (elapsed < 60) {
-                    document.getElementById('deployment-time').textContent = 
-                        `${formattedDate} ${formattedTime} (${elapsed} min ago)`;
-                } else {
-                    const hours = Math.floor(elapsed / 60);
-                    const minutes = elapsed % 60;
-                    document.getElementById('deployment-time').textContent = 
-                        `${formattedDate} ${formattedTime} (${hours}h ${minutes}m ago)`;
-                }
-            }, 60000);
-        </script>
     </body>
 </html>

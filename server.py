@@ -10,7 +10,6 @@ import time
 
 # Version information
 VERSION = "2.1"
-BUILD_DATE = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 app = Flask(__name__)
 
@@ -87,7 +86,6 @@ def process_order():
         "_service": {
             "name": "SuperOrder Service",
             "version": VERSION,
-            "build_date": BUILD_DATE,
             "processing_time_sec": round(processing_time, 4)
         },
         "_server": {
@@ -128,5 +126,5 @@ def page_not_found(_):
     return redirect(url_for('home'))
 
 if __name__ == '__main__':
-    print(f"Starting SuperOrder Service v{VERSION} (Build: {BUILD_DATE})")
+    print(f"Starting SuperOrder Service v{VERSION}")
     app.run(host='0.0.0.0', port=3000, debug=True)

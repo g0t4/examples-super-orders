@@ -32,7 +32,7 @@ sed -i "" "s/app.version=$CURRENT_VERSION/app.version=$NEW_VERSION/" compose.yam
 
 # Update version in html template
 sed -i "" "s/class=\"version-badge\">v$CURRENT_VERSION/class=\"version-badge\">v$NEW_VERSION/" templates/home.html
-sed -i "" "s/Build: v$CURRENT_VERSION\./Build: v$NEW_VERSION\./" templates/home.html
+sed -i "" "s/Build: v$CURRENT_VERSION/Build: v$NEW_VERSION/" templates/home.html
 
 echo "Version bumped successfully. Changes to commit:"
 git diff --stat

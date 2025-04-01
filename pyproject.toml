@@ -1,7 +1,7 @@
 [project]
 name = "orders"
 version = "0.1.0"
-description = "slow orders service"
+description = "superorder"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
