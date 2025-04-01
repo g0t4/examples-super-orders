@@ -9,7 +9,7 @@ import os
 import time
 
 # Version information
-VERSION = "2.0"
+VERSION = "2.1"
 BUILD_DATE = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 app = Flask(__name__)
