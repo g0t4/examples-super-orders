@@ -1,6 +1,6 @@
 services:
   orders:
-    image: weshigbee/ex-orders-service:2.2
+    image: weshigbee/examples-super-orders:2.2
     ports:
       - "3000:3000"
     build:

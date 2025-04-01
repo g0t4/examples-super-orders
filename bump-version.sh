@@ -27,7 +27,7 @@ echo "Bumping version from $CURRENT_VERSION to $NEW_VERSION"
 sed -i "" "s/VERSION = \"$CURRENT_VERSION\"/VERSION = \"$NEW_VERSION\"/" server.py
 
 # Update version in compose.yaml (both image tag and label)
-sed -i "" "s/image: weshigbee\/ex-orders-service:$CURRENT_VERSION/image: weshigbee\/ex-orders-service:$NEW_VERSION/" compose.yaml
+sed -i "" "s/image: weshigbee\/examples-super-orders:$CURRENT_VERSION/image: weshigbee\/examples-super-orders:$NEW_VERSION/" compose.yaml
 sed -i "" "s/app.version=$CURRENT_VERSION/app.version=$NEW_VERSION/" compose.yaml
 
 # Update version in html template
