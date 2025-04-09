@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.31.0-standalone/horizontalpodautoscaler-autoscaling-v2.json
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: orders
+  # namespace: orders
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: orders
+  behavior:
+    scaleDown:
+      # speed up stablization window so we don't have to wait so long for the scale down to happen
+      # normally you want a high value so you don't thrash up and down with transient spikes
+      stabilizationWindowSeconds: 30 # 300 default (5 minutes)
+    # scaleUp:
+    # stabilizationWindowSeconds: 0 # default 0 for scale up
+  minReplicas: 1  
+  maxReplicas: 12  
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 60  # Scale up if CPU usage exceeds 60% (across all replicas)
+
+# DOCS: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
+
