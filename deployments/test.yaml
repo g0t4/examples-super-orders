@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.31.0-standalone/deployment-apps-v1.json
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,6 +17,11 @@ spec:
       containers:
       - name: web
         image: weshigbee/orders-sluggish:latest
+        resources:
+          requests:
+            cpu: "500m" # == 1/2 vCPU (at least), so 60% of 500 = 300m is our scaling trigger
+          limits:
+            cpu: "1000m"
         ports:
         - containerPort: 3000
 ---
